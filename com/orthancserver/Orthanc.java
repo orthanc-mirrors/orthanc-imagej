@@ -48,4 +48,22 @@ public class Orthanc implements PlugIn
       }
     }
   }
+
+
+  // To execute the "main()" method on Ubuntu 14.04 (with ImageJ installed):
+  // java -classpath Orthanc_Import.jar:/usr/share/java/ij.jar com.orthancserver.Orthanc
+
+  public static void main(String[] args)
+  {
+    try
+    {
+      OrthancConnection c = new OrthancConnection();
+      java.awt.image.BufferedImage i = c.ReadImage("/instances/51a7cbee-0863938e-6198f621-17611be4-a2767489/preview");
+    }
+    catch (Exception e)
+    {
+      System.out.println("EXCEPTION:");
+      e.printStackTrace();
+    }
+  }
 }
