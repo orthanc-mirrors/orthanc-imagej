@@ -1,6 +1,7 @@
 Pending changes in the mainline
 ===============================
 
+* Fix issue #9 ("ImageJ - Error while importing this image: null")
 
 
 Version 1.0.0 (2014/12/08)

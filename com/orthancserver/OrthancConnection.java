@@ -47,30 +47,27 @@ public class OrthancConnection
 	}
 
 
-  private static InputStream OpenUrl(String urlString) throws IOException
-	{
-		URL url = new URL(urlString);
-
-    try
-    {
-      return url.openStream();
-    }
-    catch (ConnectException e)
-    {
-      throw new IOException();
-    }
-	}
-
-	
 	private static InputStream OpenUrl(String urlString,
-																		 String authentication) throws IOException
+																		 String authentication,
+                                     String accept) throws IOException
 	{
+    URL url = new URL(urlString);
+
+    URLConnection uc = url.openConnection();
+
+    if (authentication != null)
+    {
+      // http://blogs.deepal.org/2008/01/sending-basic-authentication-using-url.html
+      uc.setRequestProperty("Authorization", "Basic " + authentication);
+    }
+
+    if (accept != null)
+    {
+      uc.setRequestProperty("Accept", accept);
+    }
+
     try
     {
-      URL url = new URL(urlString);
-      // http://blogs.deepal.org/2008/01/sending-basic-authentication-using-url.html
-      URLConnection uc = url.openConnection();
-      uc.setRequestProperty("Authorization", "Basic " + authentication);
       return uc.getInputStream();
     }
     catch (ConnectException e)
@@ -89,10 +86,11 @@ public class OrthancConnection
   }
 
   
-  public InputStream OpenStream(String uri) throws IOException
+  public InputStream OpenStream(String uri,
+                                String acceptHeader) throws IOException
   {
     String url = baseUrl_ + uri;
-    return authentication_ == null ? OpenUrl(url) : OpenUrl(url, authentication_);
+    return OpenUrl(url, authentication_, acceptHeader);
   }
 
 
@@ -121,7 +119,7 @@ public class OrthancConnection
 
   public String ReadString(String uri) throws IOException
   {
-    InputStream stream = OpenStream(uri);
+    InputStream stream = OpenStream(uri, null);
 
     BufferedReader reader = null;
     try 
@@ -170,7 +168,8 @@ public class OrthancConnection
 
   public BufferedImage ReadImage(String uri) throws IOException
   {
-    return ImageIO.read(OpenStream(uri));
+    // Ask the download of "image/png", otherwise an "image/jpeg" is negociated
+    return ImageIO.read(OpenStream(uri, "image/png"));
   }
 
   public String GetName()
