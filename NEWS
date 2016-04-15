@@ -1,6 +1,10 @@
 Pending changes in the mainline
 ===============================
 
+
+Version 1.1 (2016/04/15)
+========================
+
 * Fix issue #9 ("Error while importing this image: null")
 * Fix issue #10 ("Cannot access an Orthanc running with a self-signed HTTPS certificate")
 
