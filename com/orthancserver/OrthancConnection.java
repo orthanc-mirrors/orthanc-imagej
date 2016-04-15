@@ -38,22 +38,37 @@ public class OrthancConnection
 	private String baseUrl_;
 	private String authentication_;
   private String name_;
+  private boolean insecure_;
 	
 	OrthancConnection()
 	{
 		baseUrl_ = "http://localhost:8042/";
 		authentication_ = null;
     name_ = "Default Orthanc server";
+    insecure_ = false;
 	}
 
 
 	private static InputStream OpenUrl(String urlString,
+                                     boolean isInsecure,
 																		 String authentication,
                                      String accept) throws IOException
 	{
     URL url = new URL(urlString);
 
     URLConnection uc = url.openConnection();
+
+    if (isInsecure)
+    {
+      try
+      {
+        HttpsTrustModifier.Trust(uc);
+      }
+      catch (Exception e)
+      {
+        throw new IOException("Cannot allow self-signed certificates");
+      }
+    }
 
     if (authentication != null)
     {
@@ -72,7 +87,7 @@ public class OrthancConnection
     }
     catch (ConnectException e)
     {
-      throw new IOException();
+      throw new IOException("Cannot read URL: " + urlString);
     }
 	}
 
@@ -90,7 +105,7 @@ public class OrthancConnection
                                 String acceptHeader) throws IOException
   {
     String url = baseUrl_ + uri;
-    return OpenUrl(url, authentication_, acceptHeader);
+    return OpenUrl(url, insecure_, authentication_, acceptHeader);
   }
 
 
@@ -115,6 +130,16 @@ public class OrthancConnection
   public String GetBaseUrl()
   {
     return baseUrl_;
+  }
+
+  public void SetInsecure(boolean insecure)
+  {
+    insecure_ = true;
+  }
+
+  public boolean IsInsecure()
+  {
+    return insecure_;
   }
 
   public String ReadString(String uri) throws IOException
@@ -199,6 +224,7 @@ public class OrthancConnection
   public static OrthancConnection Unserialize(JSONObject json)
   {
     OrthancConnection c = new OrthancConnection();
+    c.SetInsecure(true);  // Fix issue 9 (cannot connect to self-signed certificates)
     c.SetName((String) json.get("Name"));
     c.SetBaseUrl((String) json.get("Url"));
 

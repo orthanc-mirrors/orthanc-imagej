@@ -18,6 +18,7 @@ add_jar(Orthanc_Import
   ${CMAKE_SOURCE_DIR}/com/orthancserver/OrthancConnection.java
   ${CMAKE_SOURCE_DIR}/com/orthancserver/PreviewPanel.java
   ${CMAKE_SOURCE_DIR}/com/orthancserver/SelectImageDialog.java
+  ${CMAKE_SOURCE_DIR}/com/orthancserver/HttpsTrustModifier.java
 
   # Sources of the "json-simple" toolkit
   ${CMAKE_SOURCE_DIR}/org/json/simple/ItemList.java

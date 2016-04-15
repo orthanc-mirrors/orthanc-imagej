@@ -57,6 +57,7 @@ public class OrthancConfigurationDialog extends JDialog
   private OrthancConnection CreateConnection()
   {
     OrthancConnection orthanc = new OrthancConnection();
+    orthanc.SetInsecure(true);  // Fix issue 9 (cannot connect to self-signed certificates)
     orthanc.SetName(name_.getText());
     orthanc.SetBaseUrl(url_.getText());
 
