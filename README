@@ -51,7 +51,13 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 Dependencies
 ------------
 
-This plugin depends upon the "json-simple" toolkit
-(http://code.google.com/p/json-simple/), that is released under the
-Apache License 2.0. The source of this dependency is located in the
-"org/" folder.
+* This plugin depends upon the "json-simple" toolkit
+  (http://code.google.com/p/json-simple/), version 1.1.1, that is
+  released under the Apache License 2.0. The source of this dependency
+  is located in the "org/" folder.
+
+* This plugin depends upon the "pngj" toolkit, version 2.1.1, for the
+  cross-platform decoding of PNG 16bpp images
+  (https://github.com/leonbloy/pngj), that is released under the
+  Apache License 2.0. The source of this dependency is located in the
+  "com/hjg" folder.
