@@ -1,17 +1,21 @@
 Pending changes in the mainline
 ===============================
 
+
+Version 1.2 (2018-10-31)
+========================
+
 * Compatibility with OpenJDK 11 (fix Debian bug #912363)
 
 
-Version 1.1 (2016/04/15)
+Version 1.1 (2016-04-15)
 ========================
 
 * Fix issue #9 ("Error while importing this image: null")
 * Fix issue #10 ("Cannot access an Orthanc running with a self-signed HTTPS certificate")
 
 
-Version 1.0.0 (2014/12/08)
+Version 1.0.0 (2014-12-08)
 ==========================
 
 * Initial release
