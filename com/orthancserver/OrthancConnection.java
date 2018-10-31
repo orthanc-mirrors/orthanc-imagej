@@ -29,8 +29,8 @@ import java.io.InputStreamReader;
 import java.net.ConnectException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Base64;
 import javax.imageio.ImageIO;
-import javax.xml.bind.DatatypeConverter;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
@@ -40,6 +40,21 @@ public class OrthancConnection
 	private String authentication_;
   private String name_;
   private boolean insecure_;
+
+
+  public static String EncodeBase64(String content)
+  {
+    // https://stackoverflow.com/a/13109632/881731
+    return new String(Base64.getEncoder().encode(content.getBytes()));
+  }
+
+
+  public static String DecodeBase64(String content)
+  {
+    // https://stackoverflow.com/a/13109632/881731
+    return new String(Base64.getDecoder().decode(content.getBytes()));
+  }
+  
 	
 	OrthancConnection()
 	{
@@ -97,8 +112,7 @@ public class OrthancConnection
                                               String password)
   {
 		String auth = (new StringBuffer(username).append(":").append(password)).toString();
-		// http://stackoverflow.com/a/14413290/881731
-		return DatatypeConverter.printBase64Binary(auth.getBytes());
+    return EncodeBase64(auth);
   }
 
   

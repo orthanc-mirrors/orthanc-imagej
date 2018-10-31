@@ -26,6 +26,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -50,7 +51,6 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-import javax.xml.bind.DatatypeConverter;
 import javax.swing.event.TreeExpansionEvent;
 import javax.swing.event.TreeWillExpandListener;
 import javax.swing.event.TreeSelectionEvent;
@@ -553,7 +553,9 @@ public class SelectImageDialog extends JDialog
     }
     else
     {
-      String decoded = new String(DatatypeConverter.parseBase64Binary(s));
+      // https://stackoverflow.com/a/13109632/881731
+      String decoded = OrthancConnection.DecodeBase64(s);
+      
       JSONArray config = (JSONArray) JSONValue.parse(decoded);
       if (config != null)
       {
@@ -576,6 +578,8 @@ public class SelectImageDialog extends JDialog
     }
 
     String config = servers.toJSONString();
-    return DatatypeConverter.printBase64Binary(config.getBytes());
+
+    // https://stackoverflow.com/a/13109632/881731
+    return new String(Base64.getEncoder().encode(config.getBytes()));
   }
 }
