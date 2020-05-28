@@ -1,0 +1,9 @@
+
+- Support RGB images
+
+- Upgrade to json-simple >= 2.0:
+  https://github.com/cliftonlabs/json-simple
+
+  Check out the patch "json-simple-3.patch" in the Debian package in
+  that respect:
+  https://salsa.debian.org/med-team/orthanc-imagej/-/tree/master/debian/patches
