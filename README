@@ -16,6 +16,14 @@ The instructions for building/installing the plugin can be found in
 the "INSTALL" file.
 
 
+Contributing
+------------
+
+Instructions for contributing to the Orthanc project are included in
+the Orthanc Book:
+https://book.orthanc-server.com/developers/repositories.html
+
+
 Licensing
 ---------
 
